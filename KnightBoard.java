@@ -5,6 +5,7 @@ public class KnightBoard{
   private int xCor[] = {2, 1, -1, -2, -2, -1, 1, 2};
   private int yCor[] = {1, 2, 2, 1, -1, -2, -2, -1};
   private int nextX, nextY;
+  //public static int testing[][] = new int[6][6];
 
   public KnightBoard(int startingRows,int startingCols){
     board = new int[startingRows][startingCols];
@@ -36,8 +37,11 @@ public class KnightBoard{
             && (board[x][y] == 0));
   }
 
-  private boolean solveH(int xcor, int ycor, int moveNumber) throws IllegalStateException, IllegalArgumentException{
+  private boolean solveH(int xcor, int ycor, int moveNumber){
 
+    if (xcor < 0 || ycor < 0 || xcor > board.length || ycor > board[0].length) {
+        throw new IllegalArgumentException();
+    }
     if (moveNumber == (board.length * board[0].length)){
       return true;
     }
@@ -49,32 +53,83 @@ public class KnightBoard{
         if (inBounds(nextX, nextY, board)){
           board[nextX][nextY] = moveNumber;
 
-        if (solveH(nextX, nextY, moveNumber + 1)){
-          return true;
-        } else {
-          board[nextX][nextY] = -1;
+          if (solveH(nextX, nextY, moveNumber + 1)){
+            return true;
+          } else {
+            board[nextX][nextY] = 0;
+          }
+        }
+      }
+        return false;
+
+    }
+
+  public boolean solve(int startingRow, int startingCol){
+    if (startingRow < 0 || startingCol < 0 || startingRow > board.length || startingCol > board[0].length) {
+        throw new IllegalArgumentException();
+    }
+
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board[0].length; j++){
+        if (board[i][j] != 0){
+          throw new IllegalStateException();
         }
       }
     }
-        return false;
 
-  }
+    board[startingRow][startingCol] = 1;
 
-  public boolean solve(int startingRow, int startingCol) throws IllegalStateException, IllegalArgumentException{
     if (solveH(startingRow, startingCol, 1)){
       System.out.println("Yay!");
       return true;
     } else {
-      System.out.println("Yeah as always");
+      System.out.println("big sad");
       return false;
     }
   }
 
+  public int countH(int row, int col, int moveNumber, int count){
+    if (row < 0 || col < 0 || row > board.length || col > board[0].length) {
+        throw new IllegalArgumentException();
+    }
+
+    if (moveNumber == board.length * board[0].length) {
+        return 1;
+    }
+
+    for (int i = 0; i < board.length; i++) {
+      if (counter == board.length * board[0].length) {
+        return 1;
+      }
+    }
+
+      for (int i = 0; i < board.length; i++){
+        nextX = row + xCor[i];
+        nextY = col + yCor[i];
+
+        if (inBounds(nextX, nextY, board)){
+          board[nextX][nextY] = moveNumber + 1;
+          count += countH(nextX, nextY, 0, moveNumber + 1);
+          board[nextX][nextY] = 0;
+          }
+      }
+      return count;
+    }
+
+  public int countSolutions(int startingRow, int startingCol){
+    if (startingRow < 0 || startingCol < 0 || startingRow > board.length || startingCol > board[0].length) {
+        throw new IllegalArgumentException();
+    }
+
+
+  }
+
 
   public static void main(String[] args) {
+
     KnightBoard test = new KnightBoard(5,5);
-    test.solve(2,2);
-    System.out.println(test.toString());
+    test.solve(0,0);
+    //System.out.println(test.toString());
   }
 
 

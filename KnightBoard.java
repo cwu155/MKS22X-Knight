@@ -131,7 +131,6 @@ public class KnightBoard{
             nextX = sortedMoves.get(i).getX();
             nextY = sortedMoves.get(i).getY();
 
-
             //debug purposes??
             //System.out.println(sortedMoves.get(i).getX());
             //System.out.println(sortedMoves.get(i).getY());
@@ -149,18 +148,25 @@ public class KnightBoard{
                   System.out.println("help");
                   board[sortedMoves.get(i).getX()][sortedMoves.get(i).getY()] = 0;
                 }
-            }
+              }
           }
       return false;
   }
+
+  public int countSolutions(int startingRow, int startingCol){
+    if (startingRow < 0 || startingCol < 0 || startingRow > board.length || startingCol > board[0].length) {
+        throw new IllegalArgumentException();
+    }
+
+    return countH(startingRow, startingCol, 1, 0);
+  }
+
 
   private int countH(int row, int col, int moveNumber, int count){
 
     if(moveNumber == board.length * board[0].length){
       return count + 1;
     }
-
-    //sortMoves(xcor, ycor, sortedMoves);
 
     for (int i = 0; i < 8; i++){
       nextX = row + xCor[i];
@@ -175,24 +181,16 @@ public class KnightBoard{
            board[row + xCor[i]][col + yCor[i]] = 0;
       }
     }
-
     board[row][col] = 0;
     return count;
   }
 
-  public int countSolutions(int startingRow, int startingCol){
-    if (startingRow < 0 || startingCol < 0 || startingRow > board.length || startingCol > board[0].length) {
-        throw new IllegalArgumentException();
-    }
-
-    return countH(startingRow, startingCol, 1, 0);
-  }
 
 
   public static void main(String[] args) {
 
-    KnightBoard test = new KnightBoard(5,5);
-    System.out.println(test.countSolutions(2,2));
+    KnightBoard test = new KnightBoard(5,4);
+    System.out.println(test.countSolutions(0,0));
     System.out.println(test);
   }
 

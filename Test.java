@@ -31,5 +31,6 @@ public static void main(String[] args) {
   runTest(3);
   runTest(2);
   runTest(1);
+  runTest(0);
 }
 }

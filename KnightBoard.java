@@ -85,13 +85,6 @@ public class KnightBoard{
       return result;
     }
 
-  private boolean inBounds(int x, int y, int[][] board){
-    // return ((x >= 0 && y >= 0) && (x < board.length && y < board[0].length)
-    //         && (board[x][y] == 0));
-    return (x >= 0 && x < board.length && y >= 0 &&
-                y < board.length && board[x][y] == 0);
-  }
-
   public boolean solve(int startingRow,int startingCol){
 
     board[startingRow][startingCol] = 1;
@@ -109,7 +102,7 @@ public class KnightBoard{
     for (int k = 0; k < 8; k++){
       addX = xcor + xCor[k];
       addY = ycor + yCor[k];
-      if (addX < board.length && addY < board.length
+      if (addX < board.length && addY < board[0].length
           && addX >= 0 && addY >= 0 && board[addX][addY] == 0)
       sortedMoves.add(new Cell(addX, addY, moves[addX][addY]));
     }
@@ -135,17 +128,17 @@ public class KnightBoard{
             //System.out.println(sortedMoves.get(i).getX());
             //System.out.println(sortedMoves.get(i).getY());
 
-            if (nextX < board.length && nextY < board.length
+            if (nextX < board.length && nextY < board[0].length
                 && nextX >= 0 && nextY >= 0 && board[nextX][nextY] == 0){ //validates if in boundaries
 
                 board[nextX][nextY] = moveNumber;
 
-                System.out.println("Movenumber: " + moveNumber);
+                //System.out.println("Movenumber: " + moveNumber);
 
                 if (solveH(nextX, nextY, moveNumber + 1)){
                   return true;
                 } else {
-                  System.out.println("help");
+                  //System.out.println("help");
                   board[sortedMoves.get(i).getX()][sortedMoves.get(i).getY()] = 0;
                 }
               }
@@ -172,7 +165,7 @@ public class KnightBoard{
       nextX = row + xCor[i];
       nextY = col + yCor[i];
 
-      if (nextX < board.length && nextY < board.length &&
+      if (nextX < board.length && nextY < board[0].length &&
          nextX >= 0 && nextY >= 0 && board[nextX][nextY] == 0){
 
            board[row][col] = moveNumber;

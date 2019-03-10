@@ -7,7 +7,6 @@ public class KnightBoard{
   public static int yCor[] = {1, 2, 2, 1, -1, -2, -2, -1};
   public static int nextX, nextY, addX, addY;
   public static ArrayList<Cell> sortedMoves = new ArrayList<Cell>();
-  public static Cell newCell;
 
   public class Cell implements Comparable<Cell>{
     public int xcor, ycor, outcomes;
@@ -177,8 +176,6 @@ public class KnightBoard{
     board[row][col] = 0;
     return count;
   }
-
-
 
   public static void main(String[] args) {
 

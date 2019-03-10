@@ -27,6 +27,6 @@ public class Test{
 }
 
 public static void main(String[] args) {
-  runTest(5);
+  runTest(2);
 }
 }
